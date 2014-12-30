@@ -1,0 +1,11 @@
+{application, ebqueue,
+ [
+  {description, "Simplest possible unbounded blocking queue"},
+  {vsn, "0.1.0"},
+  {id, "git"},
+  {modules, [ebqueue]},
+  {registered, []},
+  {applications, [ kernel,
+                   stdlib
+                 ]}
+ ]}.
