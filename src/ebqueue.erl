@@ -27,7 +27,7 @@ in(Element, Pid) -> gen_server:cast(Pid, {enqueue, Element}).
 out(Pid) -> gen_server:call(Pid, dequeue).
 
 start_link() ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
+    gen_server:start_link(?MODULE, [], []).
 
 %%%===================================================================
 %%% gen_server callbacks
