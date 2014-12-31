@@ -38,10 +38,10 @@ init([]) ->
 
 handle_call(dequeue, From, State) ->
     case queue:out(State#state.elements) of
-        {empty, _} ->
+        {empty, _} -> %% no elements therefore we wait
             NewW = queue:in(State#state.waiters, From),
             {noreply, State#state{waiters=NewW}};
-        {{value, E}, NewQ} ->
+        {{value, E}, NewQ} -> %% return the next element
             {reply, E, State#state{elements=NewQ}}
     end.
 
