@@ -3,7 +3,7 @@
 -behaviour(gen_server).
 
 %% API functions
--export([start_link/0, in/2, out/1]).
+-export([start_link/0, in/2, out/1, out/2]).
 
 %% gen_server callbacks
 -export([init/1,
@@ -24,7 +24,14 @@
 
 in(Element, Pid) -> gen_server:cast(Pid, {enqueue, Element}).
 
-out(Pid) -> gen_server:call(Pid, dequeue).
+out(Pid) -> {ok, gen_server:call(Pid, dequeue)}.
+
+out(Pid, Timeout) ->
+    try gen_server:call(Pid, dequeue, Timeout) of
+        X -> {ok, X}
+    catch
+        exit:_ -> timeout
+    end.
 
 start_link() ->
     gen_server:start_link(?MODULE, [], []).
