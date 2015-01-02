@@ -19,3 +19,8 @@ blocking_test() ->
     receive E -> ?assertEqual({ok, testing}, E)
     after 1000 -> ?assertEqual(1, 2)
     end.
+
+timeout_test() ->
+    {ok, Q} = ebqueue:start_link(),
+    ?assertEqual(timeout, ebqueue:out(Q, 1000)).
+
