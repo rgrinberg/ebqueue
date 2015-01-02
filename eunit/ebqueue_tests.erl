@@ -4,8 +4,7 @@
 in_out_test() ->
     {ok, Q} = ebqueue:start_link(),
     ebqueue:in(testing, Q),
-    {ok, V} = ebqueue:out(Q),
-    ?assertEqual(testing, V).
+    ?assertEqual({ok, testing}, ebqueue:out(Q)).
 
 blocking_test() ->
     {ok, Q} = ebqueue:start_link(),
