@@ -24,7 +24,7 @@
 
 in(Element, Pid) -> gen_server:cast(Pid, {enqueue, Element}).
 
-out(Pid) -> {ok, gen_server:call(Pid, dequeue)}.
+out(Pid) -> {ok, gen_server:call(Pid, dequeue, infinity)}.
 
 out(Pid, Timeout) ->
     try gen_server:call(Pid, dequeue, Timeout) of
