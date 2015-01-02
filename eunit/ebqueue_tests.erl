@@ -24,3 +24,10 @@ timeout_test() ->
     {ok, Q} = ebqueue:start_link(),
     ?assertEqual(timeout, ebqueue:out(Q, 1000)).
 
+few_elements_test() ->
+    {ok, Q} = ebqueue:start_link(),
+    ok = lists:foreach(fun (X) -> ebqueue:in(X, Q) end, [1, 2, 3]),
+    {ok, V1} = ebqueue:out(Q),
+    {ok, V2} = ebqueue:out(Q, 1000),
+    {ok, V3} = ebqueue:out(Q, 2000),
+    ?assertEqual({1,2,3}, {V1, V2, V3}).
