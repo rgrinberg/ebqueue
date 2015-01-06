@@ -59,8 +59,11 @@ handle_cast({enqueue, Element}, State) ->
             NewQ = queue:in(Element, Q),
             {noreply, State#state{elements=NewQ}};
         {{value, W}, NewW} -> %% feed next waiter
-            gen_server:reply(W, Element),
-            {noreply, State#state{waiters=NewW}}
+            case process_info(W) of
+                undefined -> handle_cast({enqueue, Element}, State#state{waiters=NewW});
+                _ -> gen_server:reply(W, Element),
+                     {noreply, State#state{waiters=NewW}}
+            end
     end.
 
 handle_info(_Info, State) -> {noreply, State}.
