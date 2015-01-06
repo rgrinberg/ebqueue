@@ -2,8 +2,6 @@
 
 ## Usage
 
-1. Add as a rebar dependency
-
 ```
 % create a queue
 {ok, Q} = ebqueue:start_link().
